@@ -1,0 +1,15 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "data": {
+    "url": "https://raw.githubusercontent.com/willomo37/willomo37.github.io/refs/heads/main/GDPC1.csv"
+  },
+  "title": {"text": "United States Real Gross Domestic Product (GDPC1)"},
+  "width": 300,
+  "height": 300,
+  "mark": {"type": "line", "color": "red"},
+  "encoding": {
+    "x": {"field": "observation_date", "type": "temporal"},
+    "y": {"field": "GDPC1", "type": "quantitative"}
+  },
+  "config": {}
+}
