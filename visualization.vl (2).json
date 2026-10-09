@@ -1,0 +1,15 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "data": {
+    "url": "https://raw.githubusercontent.com/willomo37/willomo37.github.io/refs/heads/main/CPIH_ANNUAL_RATE_UK.csv"
+  },
+  "title": {"text": "UK CPIH ANNUAL RATE 00: ALL ITEMS 2015=100"},
+  "width": 300,
+  "height": 300,
+  "mark": {"type": "line", "color": "red"},
+  "encoding": {
+    "x": {"field": "date", "type": "temporal"},
+    "y": {"field": "value", "type": "quantitative"}
+  },
+  "config": {}
+}
