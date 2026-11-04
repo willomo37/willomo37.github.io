@@ -1,67 +1,231 @@
-/* This is an example CSS file. If you include it in your portfolio, it'll provide some clean and basic styling */
-/* for your page. Feel free to experiment with the values, or copy them into a new file and use that instead. */
+/* ---------- Base ---------- */
+html { scroll-behavior: smooth; }
 
-/* These are comments in CSS. Comments don't do anything except explain your working to make code easier to understand. */
-
-
-body { /* We can style any HTML element by using its name - here we're styling the body */
-  /* We want text that uses a clean sans-serif font, is usually 16px big and close to black */
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  font-size: 16px;
-  color: #333;
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Helvetica Neue', Arial, sans-serif;
+  font-size: 17px;
   line-height: 1.6;
-  /* we want a white page, that's centered and not too wide */
-  background-color: #fff;
-  margin:0 auto;
-  max-width: 800px;
-  padding-top: 60px;
+  color: #1d1d1f;
+  background: #fff;
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 40px 24px 80px;
+  text-align: center;
+  -webkit-font-smoothing: antialiased;
 }
 
-
-/* Headings */
-h1, h2, h3, h4, h5, h6 {
-  color: #333;
-  margin-top: 24px;
-  margin-bottom: 16px;
-  font-weight: 600;
+/* ---------- Headings ---------- */
+h1, h2, h3, h4 {
+  color: #1d1d1f;
+  letter-spacing: -0.02em;
+  margin: 24px 0 12px;
 }
 
-/* We want the headings to be a little bigger than the paragraph text */
-.big { /* This is the class we created in the HTML file, you can use it to style any element */
-  font-size: 2.5em;
-}
-
-h2 {
-  font-size: 1.75em;
+.big {
+  font-size: 3.25rem;
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  line-height: 1.1;
 }
 
 .small {
-  font-size: 1.25em;
+  font-size: 1.2rem;
+  font-weight: 400;
+  color: #6e6e73;
+  line-height: 1.5;
+  max-width: 680px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-/* Paragraph */
+h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
 p {
+  font-weight: 400;
+  color: #424245;
   margin-bottom: 1em;
-  font-weight: 300;
 }
 
-section {
-  margin-bottom: 2.5em;  /* We want a little more space between sections */
+/* ---------- Links ---------- */
+a { color: #0066cc; text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* ---------- Sticky week nav (frosted glass) ---------- */
+.week-nav {
+  position: sticky;
+  top: 12px;
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  width: fit-content;
+  margin: 32px auto;
+  padding: 6px;
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: saturate(180%) blur(20px);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 999px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
 }
 
-/* Links */
-/* We want the links to be a little more visible  and a different color */
-a {
-  color: #065f46;
+.week-nav a {
+  padding: 8px 18px;
+  border-radius: 999px;
+  color: #1d1d1f;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: background 0.2s, color 0.2s;
+}
+
+.week-nav a:hover {
+  background: #1d1d1f;
+  color: #fff;
   text-decoration: none;
 }
 
-a:hover {
-  text-decoration: underline;
+/* ---------- Week dropdowns ---------- */
+.week {
+  margin: 24px 0;
+  padding: 0 32px;
+  background: #fbfbfd;
+  border: 1px solid #e8e8ed;
+  border-radius: 24px;
+  scroll-margin-top: 90px;
 }
-  
-/* Images */
-img {
-  max-width: 100%;
-  height: auto;
+
+.week summary {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 14px;
+  cursor: pointer;
+  list-style: none;
+  padding: 28px 0;
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+}
+
+.week summary::-webkit-details-marker { display: none; }
+
+.week summary::after {
+  content: '';
+  width: 9px;
+  height: 9px;
+  border-right: 2px solid #86868b;
+  border-bottom: 2px solid #86868b;
+  transform: rotate(45deg) translateY(-2px);
+  transition: transform 0.25s ease;
+}
+
+.week[open] summary::after {
+  transform: rotate(-135deg) translateY(-2px);
+}
+
+/* ---------- Chart sections ---------- */
+section {
+  padding: 8px 0 32px;
+  margin: 0;
+  border-top: 1px solid #e8e8ed;
+}
+
+section:first-of-type { border-top: none; }
+
+figure {
+  display: flex;
+  justify-content: center;
+  margin: 16px 0 0;
+  overflow-x: auto;
+}
+
+img { max-width: 100%; height: auto; }
+
+/* ---------- Welcome page ---------- */
+.avatar {
+  display: block;
+  width: 220px;
+  height: 220px;
+  margin: 24px auto 8px;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center 20%;
+  border: 1px solid #e8e8ed;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+  background: #fff;
+}
+
+.bubbles {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 24px;
+  margin-top: 48px;
+}
+
+.bubble {
+  flex: 1 1 300px;
+  max-width: 380px;
+  padding: 48px 32px;
+  background: #fbfbfd;
+  border: 1px solid #e8e8ed;
+  border-radius: 40px;
+  color: #1d1d1f;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.05);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.bubble:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.1);
+  text-decoration: none;
+}
+
+.bubble .title {
+  display: block;
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+}
+
+.bubble .sub {
+  display: block;
+  margin-top: 8px;
+  color: #6e6e73;
+  font-size: 1rem;
+}
+.avatar-wrap {
+  width: 240px;
+  height: 240px;
+  margin: 24px auto 8px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 1px solid #e8e8ed;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+  background: #fff;
+}
+
+.avatar-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1.25);
+  transform-origin: 50% 3%;
+}
+
+.big {
+  font-size: clamp(2.25rem, 6vw, 3.25rem);
+}
+
+.small {
+  text-wrap: balance;
+}
+
+.avatar-wrap {
+  width: 260px;
+  height: 260px;
+  margin: 32px auto 16px;
 }
