@@ -5,8 +5,10 @@
    <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="Example3.css">
     <title>My Portfolio</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
     <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
@@ -112,56 +114,85 @@
                 </p>
             </div>
         </section>
-    </div>
+    </details>
 
  <!-- WEEK FOUR -->
+     <!-- WEEK FOUR -->
     <details class="week" id="week4" open>
         <summary>Week Four</summary>
 
         <section>
             <div class="chart-description">
-                <h3>Chart 8: </h3>
+                <h3>Original Chart: Pew Research Center, July 2026</h3>
+            </div>
+            <figure>
+                <img src="economic_issues_are_top_of_mind_for_voters_in_the_midterms_this_year_edited.png" alt="Original Pew Research Center chart" class="chart-img">
+            </figure>
+        </section>
+
+        <section>
+            <div class="chart-description">
+                <h3>Chart 8: Replica of Pew Research Center Chart</h3>
+            </div>
+            <figure id="Location8"></figure>
+        </section>
+        <section>
+            <div class="chart-description">
+                <h3>Chart 9: Improved version</h3>
+                <p>Combined all economic issues into one bar to better show that they make up the 29% value under NET Economy in the origional chart.</p>
+            </div>
+            <figure id="Location9"></figure>
+        </section>
+    </details>
+
+   <!-- WEEK Five -->
+    <details class="week" id="week5" open>
+        <summary>Week Five</summary>
+
+        <section>
+            <div class="chart-description">
+                <h3>Chart 10: </h3>
             </div>
             <div class="chart-description">
                 <p>The US federal minimum wage has been eroded by inflation. Despite several increases, the current minimum wage of $7.25/hr is roughly half its 1968 value. </p>
             </div>
-            <figure id="Location8"></figure>               
-            </div>
-        </section>
-    </div>
 </section>
     </div>
 </section>
     </details>
 
-   <script>
-        let chart1 = "https://raw.githubusercontent.com/EconomicsObservatory/courses/main/2/s2_chart2.json";
-        let chart2 = "https://raw.githubusercontent.com/RDeconomist/RDeconomist.github.io/refs/heads/main/charts/library/chartLine3.json";
-        let chart3 = "https://raw.githubusercontent.com/RDeconomist/RDeconomist.github.io/refs/heads/main/charts/library/chartScatter3.json";
-        let chart4 = "USGDPChart.json";
-        let chart5 = "UK_CPIH_ANNUAL_RATE.json";
-        let chart6 = "US_MINWAGE_NOMVREAL_wk3.json";
-        let chart7 = "statevfedminwage.json";
+<script>
+    let chart1 = "https://raw.githubusercontent.com/EconomicsObservatory/courses/main/2/s2_chart2.json";
+    let chart2 = "https://raw.githubusercontent.com/RDeconomist/RDeconomist.github.io/refs/heads/main/charts/library/chartLine3.json";
+    let chart3 = "https://raw.githubusercontent.com/RDeconomist/RDeconomist.github.io/refs/heads/main/charts/library/chartScatter3.json";
+    let chart4 = "USGDPChart.json";
+    let chart5 = "UK_CPIH_ANNUAL_RATE.json";
+    let chart6 = "US_MINWAGE_NOMVREAL_wk3.json";
+    let chart7 = "statevfedminwage.json";
+    let chart8 = "PewRemake.json";
+    let chart9 = "Improved Pew Chart.json";
 
-        const siteFont = "-apple-system, BlinkMacSystemFont, 'Inter', 'Helvetica Neue', Arial, sans-serif";
+    const siteFont = "-apple-system, BlinkMacSystemFont, 'Inter', 'Helvetica Neue', Arial, sans-serif";
 
-        async function draw(id, url) {
-            const spec = await (await fetch(url)).json();
-            spec.background = 'transparent';
-            spec.config = spec.config || {};
-            spec.config.font = siteFont;
-            spec.config.background = 'transparent';
-            vegaEmbed(id, spec, {renderer: 'svg'});
-        }
+    async function draw(id, url, bg = 'transparent') {
+        const spec = await (await fetch(url)).json();
+        spec.background = bg;
+        spec.config = spec.config || {};
+        spec.config.font = siteFont;
+        spec.config.background = bg;
+        vegaEmbed(id, spec, {renderer: 'svg', actions: false});
+    }
 
-        document.fonts.ready.then(() => {
-            draw('#Location1', chart1);
-            draw('#Location2', chart2);
-            draw('#Location3', chart3);
-            draw('#Location4', chart4);
-            draw('#Location5', chart5);
-            draw('#Location6', chart6);
-            draw('#Location7', chart7);
+    document.fonts.ready.then(() => {
+        draw('#Location1', chart1);
+        draw('#Location2', chart2);
+        draw('#Location3', chart3);
+        draw('#Location4', chart4);
+        draw('#Location5', chart5);
+        draw('#Location6', chart6);
+        draw('#Location7', chart7);
+        draw('#Location8', chart8, 'white');
+        draw('#Location9', chart9);
     });
 </script>
 </body>

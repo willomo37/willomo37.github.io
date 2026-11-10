@@ -1,0 +1,57 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 300,
+  "height": 241,
+  "padding": {"left": 7, "right": 10, "top": 7, "bottom": 10},
+  "title": {
+    "text": ["Economic concerns are top of mind for midterm voters"],
+    "subtitle": ["Issue registered voters most want candidates for Congress to discuss, %"],
+    "anchor": "start", "frame": "group", "dx": -168,
+    "fontSize": 19, "fontWeight": "bold", "color": "#1d1d1f",
+    "subtitleFontSize": 12, "subtitleColor": "#666", "subtitleLineHeight": 16,
+    "subtitlePadding": 6, "offset": 16
+  },
+  "config": {"background": "white", "view": {"stroke": null}},
+  "datasets": {
+    "econ": [
+      {"n": "Cost of living / affordability", "pct": 15, "x0": 0, "x1": 15, "mid": 7.5},
+      {"n": "General", "pct": 7, "x0": 15, "x1": 22, "mid": 18.5},
+      {"n": "Taxes", "pct": 4, "x0": 22, "x1": 26, "mid": 24},
+      {"n": "Other", "pct": 3, "x0": 26, "x1": 29, "mid": 27.5}
+    ],
+    "other": [
+      {"issue": "Government ethics and reform", "pct": 9, "yc": 60, "y0": 43, "y1": 77},
+      {"issue": "Immigration", "pct": 7, "yc": 100, "y0": 83, "y1": 117},
+      {"issue": "Healthcare", "pct": 5, "yc": 140, "y0": 123, "y1": 157},
+      {"issue": "Foreign policy", "pct": 4, "yc": 180, "y0": 163, "y1": 197},
+      {"issue": "Trump", "pct": 4, "yc": 220, "y0": 203, "y1": 237}
+    ]
+  },
+  "layer": [
+    {"data": {"name": "econ"}, "mark": {"type": "rect"},
+     "encoding": {"x": {"field": "x0", "type": "quantitative", "scale": {"domain": [0, 29]}, "axis": null}, "x2": {"field": "x1"}, "y": {"value": 3}, "y2": {"value": 37}, "color": {"value": "#D1A62B"}}},
+    {"data": {"values": [{"x": 15}, {"x": 22}, {"x": 26}]}, "mark": {"type": "rule", "color": "white", "strokeWidth": 2},
+     "encoding": {"x": {"field": "x", "type": "quantitative", "scale": {"domain": [0, 29]}, "axis": null}, "y": {"value": 3}, "y2": {"value": 37}}},
+    {"data": {"name": "econ"}, "mark": {"type": "text", "baseline": "middle", "fontSize": 13, "fontWeight": "bold", "color": "#1d1d1f"},
+     "encoding": {"x": {"field": "mid", "type": "quantitative", "scale": {"domain": [0, 29]}, "axis": null}, "y": {"value": 14}, "text": {"field": "pct"}}},
+    {"data": {"name": "econ"}, "mark": {"type": "text", "baseline": "middle", "fontSize": 9.5, "color": "#1d1d1f"},
+     "encoding": {"x": {"field": "mid", "type": "quantitative", "scale": {"domain": [0, 29]}, "axis": null}, "y": {"value": 29}, "text": {"field": "n"}}},
+    {"data": {"values": [{"t": "Economic issues", "y": 13}, {"t": "(combined)", "y": 28}]},
+     "mark": {"type": "text", "align": "right", "baseline": "middle", "fontSize": 11, "fontWeight": "bold", "color": "#1d1d1f", "dx": -8},
+     "encoding": {"x": {"value": 0}, "y": {"field": "y", "type": "quantitative", "scale": null, "axis": null}, "text": {"field": "t"}}},
+    {"data": {"values": [{"t": "29 total", "y": 20}]},
+     "mark": {"type": "text", "align": "left", "baseline": "middle", "fontSize": 12, "fontWeight": "bold", "color": "#1d1d1f", "dx": 6},
+     "encoding": {"x": {"value": 300}, "y": {"field": "y", "type": "quantitative", "scale": null, "axis": null}, "text": {"field": "t"}}},
+    {"data": {"name": "other"}, "mark": {"type": "rect"},
+     "encoding": {"x": {"field": "pct", "type": "quantitative", "scale": {"domain": [0, 29]}, "axis": null}, "x2": {"value": 0}, "y": {"field": "y0", "type": "quantitative", "scale": null, "axis": null}, "y2": {"field": "y1"}, "color": {"value": "#D1A62B"}}},
+    {"data": {"name": "other"}, "mark": {"type": "text", "align": "left", "baseline": "middle", "fontSize": 12, "fontWeight": "bold", "color": "#1d1d1f", "dx": 6},
+     "encoding": {"x": {"field": "pct", "type": "quantitative", "scale": {"domain": [0, 29]}, "axis": null}, "y": {"field": "yc", "type": "quantitative", "scale": null, "axis": null}, "text": {"field": "pct"}}},
+    {"data": {"name": "other"}, "mark": {"type": "text", "align": "right", "baseline": "middle", "fontSize": 10.5, "color": "#1d1d1f", "dx": -8},
+     "encoding": {"x": {"value": 0}, "y": {"field": "yc", "type": "quantitative", "scale": null, "axis": null}, "text": {"field": "issue"}}},
+    {"data": {"values": [
+       {"t": "Note: Share of registered voters, open-ended question. Responses under 4% not shown.", "y": 261},
+       {"t": "Source: Pew Research Center survey of U.S. adults, July 6-12, 2026.", "y": 276}]},
+     "mark": {"type": "text", "align": "left", "fontSize": 10, "color": "#777"},
+     "encoding": {"x": {"value": -168}, "y": {"field": "y", "type": "quantitative", "scale": null, "axis": null}, "text": {"field": "t"}}}
+  ]
+}
