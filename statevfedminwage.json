@@ -1,0 +1,78 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": "Most States Set Their Minimum Wage Above the Federal Floor",
+  "width": 700,
+  "height": 400,
+  "data": {
+    "url": "https://raw.githubusercontent.com/willomo37/willomo37.github.io/refs/heads/main/statevfederal-minwage_wk3.csv"
+  },
+  "layer": [
+    {
+      "mark": "bar",
+      "encoding": {
+        "x": {
+          "field": "state",
+          "type": "nominal",
+          "sort": "-y",
+          "title": null,
+          "axis": {
+            "labelAngle": -45,
+            "labelAlign": "right",
+            "labelBaseline": "top"
+          }
+        },
+        "y": {
+          "field": "wage",
+          "type": "quantitative",
+          "title": "Minimum wage, dollars per hour (July 1, 2026)"
+        }
+      }
+    },
+    {
+      "mark": {"type": "rule", "strokeWidth": 2, "color": "red"},
+      "encoding": {
+        "y": {"aggregate": "mean", "field": "federal", "type": "quantitative"}
+      }
+    },
+    {
+      "mark": {
+        "type": "rule",
+        "strokeWidth": 2,
+        "strokeDash": [6, 4],
+        "color": "black"
+      },
+      "encoding": {
+        "y": {"aggregate": "mean", "field": "median", "type": "quantitative"}
+      }
+    },
+    {
+      "mark": {
+        "type": "text",
+        "align": "right",
+        "dy": -7,
+        "color": "red",
+        "fontWeight": "bold"
+      },
+      "encoding": {
+        "x": {"value": 695},
+        "y": {"aggregate": "mean", "field": "federal", "type": "quantitative"},
+        "text": {"value": "Federal minimum: $7.25"}
+      }
+    },
+    {
+      "mark": {
+        "type": "text",
+        "align": "right",
+        "dy": -7,
+        "color": "black",
+        "fontWeight": "bold"
+      },
+      "encoding": {
+        "x": {"value": 695},
+        "y": {"aggregate": "mean", "field": "median", "type": "quantitative"},
+        "text": {"value": "State median: $11.85"}
+      }
+    }
+  ],
+  "config": {}
+}
