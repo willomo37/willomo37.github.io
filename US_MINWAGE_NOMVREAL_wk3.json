@@ -1,0 +1,19 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": "US Federal Minimum Wage Has Lost Half Its Value Since 1968",
+  "data": {
+    "url": "https://raw.githubusercontent.com/willomo37/willomo37.github.io/refs/heads/main/WEEK%202%20Minimum%20Wage%20US.csv"
+  },
+  "transform": [{"fold": ["nominal", "real"], "as": ["type", "wage"]}],
+  "mark": {"type": "line", "interpolate": "step-after"},
+  "encoding": {
+    "x": {"field": "date", "type": "temporal", "title": "Year"},
+    "y": {
+      "field": "wage",
+      "type": "quantitative",
+      "title": "Dollars per hour (real = 2025 dollars)"
+    },
+    "color": {"field": "type", "type": "nominal", "title": "Wage"}
+  },
+  "config": {}
+}
