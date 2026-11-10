@@ -11,5 +11,8 @@
     "x": {"field": "observation_date", "type": "temporal"},
     "y": {"field": "GDPC1", "type": "quantitative"}
   },
-  "config": {}
+  "config": {
+    "background": "transparent",
+    "font": "Catamaran, sans-serif"
+  }
 }

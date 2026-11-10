@@ -1,0 +1,151 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 200,
+  "height": 360,
+  "padding": {"left": 10, "right": 10, "top": 10, "bottom": 15},
+  "title": {
+    "text": [
+      "Economic issues are top of mind for",
+      "voters in the midterms this year"
+    ],
+    "subtitle": [
+      "What one issue would you most like to hear the",
+      "candidates running for Congress in your district",
+      "talk about during the campaign? (open end, %",
+      "among registered voters)"
+    ],
+    "anchor": "start",
+    "frame": "group",
+    "dx": -220,
+    "fontSize": 24,
+    "fontWeight": "bold",
+    "color": "#222",
+    "subtitleFontSize": 17,
+    "subtitleFontStyle": "italic",
+    "subtitleColor": "#666",
+    "subtitleLineHeight": 22,
+    "subtitlePadding": 10,
+    "offset": 22
+  },
+  "data": {
+    "values": [
+      {"issue": "NET Economy", "pct": 29, "sub": false},
+      {"issue": "Cost of living/Affordability", "pct": 15, "sub": true},
+      {"issue": "General economy", "pct": 7, "sub": true},
+      {"issue": "Taxes", "pct": 4, "sub": true},
+      {"issue": " ", "pct": 0, "sub": false},
+      {"issue": "Government ethics and reform", "pct": 9, "sub": false},
+      {"issue": "Immigration", "pct": 7, "sub": false},
+      {"issue": "Healthcare", "pct": 5, "sub": false},
+      {"issue": "Foreign policy", "pct": 4, "sub": false},
+      {"issue": "Trump", "pct": 4, "sub": false}
+    ]
+  },
+  "transform": [{"calculate": "datum.pct / 2", "as": "mid"}],
+  "encoding": {
+    "y": {
+      "field": "issue",
+      "type": "nominal",
+      "sort": null,
+      "title": null,
+      "axis": {
+        "domain": false,
+        "ticks": false,
+        "labelFontSize": 15,
+        "labelLimit": 300,
+        "labelPadding": 8,
+        "labelFontStyle": {
+          "expr": "indexof(['Cost of living/Affordability','General economy','Taxes'], datum.label) >= 0 ? 'italic' : 'normal'"
+        }
+      }
+    }
+  },
+  "layer": [
+    {
+      "mark": {"type": "bar", "height": {"band": 0.8}},
+      "encoding": {
+        "x": {
+          "field": "pct",
+          "type": "quantitative",
+          "axis": null,
+          "scale": {"domain": [0, 29]}
+        },
+        "color": {
+          "condition": {"test": "datum.sub", "value": "#EBDBA8"},
+          "value": "#D1A62B"
+        }
+      }
+    },
+    {
+      "transform": [{"filter": "datum.pct > 0"}],
+      "mark": {"type": "text", "fontSize": 14, "color": "#222"},
+      "encoding": {
+        "x": {"field": "mid", "type": "quantitative"},
+        "text": {"field": "pct"}
+      }
+    },
+    {
+      "data": {
+        "values": [
+          {
+            "t": "Note: Based on registered voters. Only response options that",
+            "y": 385
+          },
+          {
+            "t": "made up 4% or more of responses are shown here. Refer to",
+            "y": 403
+          },
+          {
+            "t": "topline for full question wording and response list.",
+            "y": 421
+          },
+          {
+            "t": "Source: Survey of U.S. adults conducted July 6-12, 2026.",
+            "y": 439
+          }
+        ]
+      },
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "fontSize": 14,
+        "color": "#888"
+      },
+      "encoding": {
+        "x": {"value": -220},
+        "y": {
+          "field": "y",
+          "type": "quantitative",
+          "scale": null,
+          "axis": null
+        },
+        "text": {"field": "t"}
+      }
+    },
+    {
+      "data": {"values": [{"t": "PEW RESEARCH CENTER", "y": 475}]},
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "fontSize": 14,
+        "fontWeight": "bold",
+        "color": "#222"
+      },
+      "encoding": {
+        "x": {"value": -220},
+        "y": {
+          "field": "y",
+          "type": "quantitative",
+          "scale": null,
+          "axis": null
+        },
+        "text": {"field": "t"}
+      }
+    }
+  ],
+  "config": {
+    "background": "white",
+    "font": "Arial, Helvetica, sans-serif",
+    "view": {"stroke": null}
+  }
+}

@@ -29,7 +29,7 @@
       }
     },
     {
-      "mark": {"type": "rule", "strokeWidth": 2, "color": "red"},
+      "mark": {"type": "rule", "strokeWidth": 2, "color": "darkorange"},
       "encoding": {
         "y": {"aggregate": "mean", "field": "federal", "type": "quantitative"}
       }
@@ -50,7 +50,7 @@
         "type": "text",
         "align": "right",
         "dy": -7,
-        "color": "red",
+        "color": "darkorange",
         "fontWeight": "bold"
       },
       "encoding": {
@@ -74,5 +74,8 @@
       }
     }
   ],
-  "config": {}
+   "config": {
+    "background": "transparent",
+    "font": "Catamaran, sans-serif"
+  }
 }

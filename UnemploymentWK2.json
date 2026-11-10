@@ -31,5 +31,9 @@
       "axis": {"title": "", "titleColor": "#122B39", "grid": false}
     }
   },
-  "config": {}
+    "config": {
+    "background": "transparent",
+    "font": "Catamaran, sans-serif"
+  }
+
 }

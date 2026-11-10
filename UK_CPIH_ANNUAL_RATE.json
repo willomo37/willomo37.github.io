@@ -11,5 +11,8 @@
     "x": {"field": "date", "type": "temporal"},
     "y": {"field": "value", "type": "quantitative"}
   },
-  "config": {}
+   "config": {
+    "background": "transparent",
+    "font": "Catamaran, sans-serif"
+  }
 }

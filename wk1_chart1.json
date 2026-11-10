@@ -1,11 +1,11 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
- 
+
   "title": {"text": "GDP Per Capita"},
- 
+
   "width": 400,
   "height": 300,
-   
+
   "data": {
     "values": [
       {"Country": "China","GDP per capita": 21482},
@@ -16,20 +16,26 @@
       {"Country": "USA","GDP per capita": 76329}
     ]
   },
- 
+
   "mark": {
     "type": "bar",
     "color": "red"
   },
- 
+
   "encoding": {
     "x": {
-      "field": "Country"
-    },  
- 
+      "field": "Country",
+      "type": "nominal"
+    },
+
     "y": {
       "field": "GDP per capita",
-      "type": "quantitative"}
+      "type": "quantitative"
     }
+  },
+
+  "config": {
+    "background": "transparent",
+    "font": "Catamaran, sans-serif"
+  }
 }
- 

@@ -37,6 +37,7 @@
         <a href="#week1">Week One</a>
         <a href="#week2">Week Two</a>
         <a href="#week3">Week Three</a>
+        <a href="#week4">Week Four</a>
     </nav>
 
     <!-- WEEK ONE -->
@@ -90,31 +91,79 @@
 
         <section>
             <div class="chart-description">
-                <h3>Chart 6: A Forecast of Population Decline</h3>
-                <p>
-                    We've organised the page into sections, with each section containing a chart, title and a description. Here, we can describe the chart and give some context.
-                    As a first example, we're using a basic chart from our repo.
-                </p>
+                <h3>Charts 6 & 7: Should Congress raise the federal minimum wage?</h3>
+            </div>
+            <div class="chart-description">
+                <p>The US federal minimum wage has been eroded by inflation. Despite several increases, the current minimum wage of $7.25/hr is roughly half its 1968 value. </p>
             </div>
             <figure id="Location6"></figure>
+            <div class="chart-description">
+                <p>More than half of states have increased their minimum above the federal floor. Federal minimum wage should be increased to $15/hr to match 1968 value.</p>
+            </div>
+            <figure id="Location7"></figure>
+            <div class="chart-description">
+                <p class="sources">
+                    Sources: U.S. Department of Labor, Federal Minimum Wage Rate (STTMINWGFG), via
+                    <a href="https://fred.stlouisfed.org/series/STTMINWGFG" target="_blank">FRED</a>;
+                    U.S. Bureau of Labor Statistics, CPI for All Urban Consumers (CPIAUCSL), via
+                    <a href="https://fred.stlouisfed.org/series/CPIAUCSL" target="_blank">FRED</a>;
+                    <a href="https://www.ncsl.org/labor-and-employment/state-minimum-wages" target="_blank">NCSL, State Minimum Wages</a>
+                    (rates as of July 1, 2026). Real wages in 2025 dollars and state median calculated by author.
+                </p>
+            </div>
         </section>
+    </div>
+
+ <!-- WEEK FOUR -->
+    <details class="week" id="week4" open>
+        <summary>Week Four</summary>
+
+        <section>
+            <div class="chart-description">
+                <h3>Chart 8: </h3>
+            </div>
+            <div class="chart-description">
+                <p>The US federal minimum wage has been eroded by inflation. Despite several increases, the current minimum wage of $7.25/hr is roughly half its 1968 value. </p>
+            </div>
+            <figure id="Location8"></figure>               
+            </div>
+        </section>
+    </div>
+</section>
+    </div>
+</section>
     </details>
 
-    <script>
+   <script>
         let chart1 = "https://raw.githubusercontent.com/EconomicsObservatory/courses/main/2/s2_chart2.json";
         let chart2 = "https://raw.githubusercontent.com/RDeconomist/RDeconomist.github.io/refs/heads/main/charts/library/chartLine3.json";
         let chart3 = "https://raw.githubusercontent.com/RDeconomist/RDeconomist.github.io/refs/heads/main/charts/library/chartScatter3.json";
         let chart4 = "USGDPChart.json";
         let chart5 = "UK_CPIH_ANNUAL_RATE.json";
-        // let chart6 = "";  // add your chart 6 file here
+        let chart6 = "US_MINWAGE_NOMVREAL_wk3.json";
+        let chart7 = "statevfedminwage.json";
 
-        vegaEmbed('#Location1', chart1);
-        vegaEmbed('#Location2', chart2);
-        vegaEmbed('#Location3', chart3);
-        vegaEmbed('#Location4', chart4);
-        vegaEmbed('#Location5', chart5);
-        // vegaEmbed('#Location6', chart6);  // uncomment once chart6 is defined
-    </script>
+        const siteFont = "-apple-system, BlinkMacSystemFont, 'Inter', 'Helvetica Neue', Arial, sans-serif";
+
+        async function draw(id, url) {
+            const spec = await (await fetch(url)).json();
+            spec.background = 'transparent';
+            spec.config = spec.config || {};
+            spec.config.font = siteFont;
+            spec.config.background = 'transparent';
+            vegaEmbed(id, spec, {renderer: 'svg'});
+        }
+
+        document.fonts.ready.then(() => {
+            draw('#Location1', chart1);
+            draw('#Location2', chart2);
+            draw('#Location3', chart3);
+            draw('#Location4', chart4);
+            draw('#Location5', chart5);
+            draw('#Location6', chart6);
+            draw('#Location7', chart7);
+    });
+</script>
 </body>
 
 </html>
