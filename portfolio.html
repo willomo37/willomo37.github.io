@@ -15,10 +15,17 @@
     <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
 
     <style>
-        #chartGrid {
-            display: flex;
-        }
-    </style>
+    .vega-embed { max-width: 100%; }
+    .chart-img { max-width: 100%; height: auto; }
+
+    .week, .week section { min-width: 0; max-width: 100%; }
+    .week { overflow-x: auto; }
+
+    @media (max-width: 600px) {
+        figure { margin-left: 0; margin-right: 0; }
+        .week-nav { flex-wrap: wrap; }
+    }
+</style>
 </head>
 
 <body>
@@ -174,13 +181,30 @@
 
     const siteFont = "-apple-system, BlinkMacSystemFont, 'Inter', 'Helvetica Neue', Arial, sans-serif";
 
+    // Lets the finished SVG shrink to fit its container (never grows past its original size)
+    function makeScalable(id) {
+        const svg = document.querySelector(id + ' svg');
+        if (!svg) return;
+        const w = parseFloat(svg.getAttribute('width'));
+        const h = parseFloat(svg.getAttribute('height'));
+        if (!w || !h) return;
+        svg.setAttribute('viewBox', `0 0 ${w} ${h}`);
+        svg.style.maxWidth = '100%';
+        svg.style.height = 'auto';
+    }
+
     async function draw(id, url, bg = 'transparent') {
-        const spec = await (await fetch(url)).json();
-        spec.background = bg;
-        spec.config = spec.config || {};
-        spec.config.font = siteFont;
-        spec.config.background = bg;
-        vegaEmbed(id, spec, {renderer: 'svg', actions: false});
+        try {
+            const spec = await (await fetch(url)).json();
+            spec.background = bg;
+            spec.config = spec.config || {};
+            spec.config.font = siteFont;
+            spec.config.background = bg;
+            await vegaEmbed(id, spec, {renderer: 'svg', actions: false});
+            makeScalable(id);
+        } catch (err) {
+            console.error('Chart failed to load:', id, url, err);
+        }
     }
 
     document.fonts.ready.then(() => {
