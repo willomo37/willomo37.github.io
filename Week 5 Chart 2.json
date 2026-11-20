@@ -1,0 +1,46 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "data": {"url": "https://raw.githubusercontent.com/willomo37/willomo37.github.io/refs/heads/main/state_unemployment_tidy.csv"},
+  "title": {
+    "text": "Unemployment across US states",
+    "subtitle": "Seasonally adjusted rate, August 2026. Dashed line = US rate; red = above it. Source: BLS via Wikipedia"
+  },
+  "width": 700,
+  "height": 350,
+  "layer": [
+    {
+      "mark": "bar",
+      "encoding": {
+        "x": {
+          "field": "jurisdiction", "type": "nominal", "sort": "-y",
+          "title": "", "axis": {"labelAngle": -60}
+        },
+        "y": {"field": "unemployment_rate", "type": "quantitative", "title": "Unemployment rate (%)"},
+        "color": {
+          "condition": {"test": "datum.unemployment_rate > 4.1", "value": "#c0392b"},
+          "value": "#2c7bb6"
+        },
+        "tooltip": [
+          {"field": "jurisdiction", "title": "State"},
+          {"field": "unemployment_rate", "title": "Rate (%)"}
+        ]
+      }
+    },
+    {
+      "data": {"values": [{"us_rate": 4.1}]},
+      "mark": {"type": "rule", "strokeDash": [4, 4], "color": "black"},
+      "encoding": {
+        "y": {"field": "us_rate", "type": "quantitative", "title": "Unemployment rate (%)"}
+      }
+    },
+    {
+      "data": {"values": [{"us_rate": 4.1, "label": "US rate: 4.1%"}]},
+      "mark": {"type": "text", "align": "right", "dx": -4, "dy": -7, "fontSize": 11},
+      "encoding": {
+        "y": {"field": "us_rate", "type": "quantitative", "title": "Unemployment rate (%)"},
+        "x": {"value": 695},
+        "text": {"field": "label"}
+      }
+    }
+  ]
+}

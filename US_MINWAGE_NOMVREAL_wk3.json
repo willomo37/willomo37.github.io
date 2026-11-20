@@ -7,16 +7,56 @@
     "url": "https://raw.githubusercontent.com/willomo37/willomo37.github.io/refs/heads/main/WEEK%202%20Minimum%20Wage%20US.csv"
   },
   "transform": [{"fold": ["nominal", "real"], "as": ["type", "wage"]}],
-  "mark": {"type": "line", "interpolate": "step-after"},
-  "encoding": {
-    "x": {"field": "date", "type": "temporal", "title": "Year"},
-    "y": {
-      "field": "wage",
-      "type": "quantitative",
-      "title": "Dollars per hour (real = 2025 dollars)"
+  "layer": [
+    {
+      "mark": {"type": "line", "interpolate": "step-after"},
+      "encoding": {
+        "x": {"field": "date", "type": "temporal", "title": "Year"},
+        "y": {
+          "field": "wage",
+          "type": "quantitative",
+          "title": "Dollars per hour (real = 2025 dollars)"
+        },
+        "color": {"field": "type", "type": "nominal", "title": "Wage"}
+      }
     },
-    "color": {"field": "type", "type": "nominal", "title": "Wage"}
-  },
+    {
+      "transform": [{"pivot": "type", "value": "wage", "groupby": ["date"]}],
+      "mark": {"type": "point", "opacity": 0},
+      "params": [
+        {
+          "name": "hover",
+          "select": {
+            "type": "point",
+            "fields": ["date"],
+            "nearest": true,
+            "on": "pointerover",
+            "clear": "pointerout"
+          }
+        }
+      ],
+      "encoding": {
+        "x": {"field": "date", "type": "temporal"},
+        "y": {"value": 125},
+        "tooltip": [
+          {"field": "date", "type": "temporal", "timeUnit": "year", "title": "Year"},
+          {"field": "nominal", "type": "quantitative", "title": "Nominal wage", "format": "$.2f"},
+          {"field": "real", "type": "quantitative", "title": "Real wage (2025 $)", "format": "$.2f"}
+        ]
+      }
+    },
+    {
+      "transform": [{"pivot": "type", "value": "wage", "groupby": ["date"]}],
+      "mark": {"type": "rule", "color": "gray", "strokeWidth": 1},
+      "encoding": {
+        "x": {"field": "date", "type": "temporal"},
+        "opacity": {
+          "condition": {"param": "hover", "empty": false, "value": 0.6},
+          "value": 0
+        }
+      }
+    }
+  ],
   "config": {
     "background": "transparent",
     "font": "Catamaran, sans-serif"

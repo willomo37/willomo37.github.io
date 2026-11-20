@@ -47,6 +47,8 @@
         <a href="#week2">Week Two</a>
         <a href="#week3">Week Three</a>
         <a href="#week4">Week Four</a>
+        <a href="#week5">Week Five</a>
+        <a href="#week6">Week Six</a>
     </nav>
 
     <!-- WEEK ONE -->
@@ -158,11 +160,66 @@
 
         <section>
             <div class="chart-description">
-                <h3>Chart 10: </h3>
+                <h3>Chart 10: A Look at US Unemployment Since 1990 </h3>
             </div>
+            <figure id="Location10"></figure>
+        </section>
             <div class="chart-description">
-                <p>The US federal minimum wage has been eroded by inflation. Despite several increases, the current minimum wage of $7.25/hr is roughly half its 1968 value. </p>
+               <p>
+                This chart uses a World Bank API to pull live US unemployment data. The base URL for this API is:
+                <a href="https://api.worldbank.org/v2/" target="_blank" rel="noopener"><strong>https://api.worldbank.org/v2/</strong></a>
+                </p>
+
+                <p>
+                To call the data, the following elements are needed:
+                <strong>country/usa</strong> to select the country;
+                <strong>indicator/SL.UEM.TOTL.ZS</strong> to select the unemployment data;
+                <strong>?format=json</strong> to return JSON instead of the default XML format; and
+                <strong>&amp;per_page=100</strong> to return the full time series.
+                No API key is required. This is the full URL:
+                <a href="https://api.worldbank.org/v2/country/usa/indicator/SL.UEM.TOTL.ZS?format=json&amp;per_page=100" target="_blank" rel="noopener"><strong>https://api.worldbank.org/v2/country/usa/indicator/SL.UEM.TOTL.ZS?format=json&amp;per_page=100</strong></a>
+                
+                <p>
+                The data is returned as JSON in a nested format in a two-item list of [metadata, data].
+                Actual observations are listed second, so the chart uses <code>"property": "[1]"</code> to read them.
+                Each row is one country-year observation, so the data is close to tidy (clean) format,
+                though years with no data are returned as null and the chart filters them out.
+                </p>
             </div>
+
+        <section>
+            <div class="chart-description">
+                <h3>Chart 11: US State Unemployment August 2026</h3>
+            </div>
+            <figure id="Location11"></figure>
+        </section>
+            <div class="chart-description">
+             <p>
+            I scraped Wikipedia's state unemployment table with pandas, stripped footnotes, fixed doubled names, dropped outdated territories. Challenge: origional data blocked scraping, so I switched sources.
+            </p>
+
+            <p>
+            <a href="https://colab.research.google.com/drive/1H9egmJiu1eMjmf2dBG0gqXWWolE5P379?usp=sharing" target="_blank" rel="noopener"><strong><u>View the Google Colab notebook</u></strong></a>
+            </p>
+            </div>
+        </section>
+    </details>
+
+    <!-- WEEK six  -->
+    <details class="week" id="week6" open>
+        <summary>Week Six</summary>
+
+        <section>
+            <div class="chart-description">
+                <h3>Chart 10: A Look at US Unemployment Since 1990 </h3>
+            </div>
+            <figure id="Location10"></figure>
+        </section>
+            <div class="chart-description">
+               <p>
+                This chart
+    
+            
 </section>
     </div>
 </section>
@@ -178,6 +235,8 @@
     let chart7 = "statevfedminwage.json";
     let chart8 = "PewRemake.json";
     let chart9 = "Improved Pew Chart.json";
+    let chart10 = "US Unemployment API.json";
+    let chart11 = "Week 5 Chart 2.json";
 
     const siteFont = "-apple-system, BlinkMacSystemFont, 'Inter', 'Helvetica Neue', Arial, sans-serif";
 
@@ -217,6 +276,8 @@
         draw('#Location7', chart7);
         draw('#Location8', chart8, 'white');
         draw('#Location9', chart9);
+        draw('#Location10', chart10);
+        draw('#Location11', chart11);
     });
 </script>
 </body>

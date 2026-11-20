@@ -1,0 +1,23 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "data": {
+    "url": "https://api.worldbank.org/v2/country/usa/indicator/SL.UEM.TOTL.ZS?format=json&per_page=100",
+    "format": {"property": "[1]"}
+  },
+  "width": 500,
+  "height": 350,
+  "title": {
+    "text": "US unemployment: two sharp shocks in thirty years",
+    "subtitle": "Unemployment, % of total labour force (modelled ILO estimate). Source: World Bank (live API)"
+  },
+  "transform": [{"filter": "datum.value != null"}],
+  "mark": {"type": "line", "point": {"size": 60}},
+  "encoding": {
+    "x": {"field": "date", "type": "temporal", "title": "", "axis": {"grid": false}},
+    "y": {"field": "value", "type": "quantitative", "title": "% of labour force"},
+    "tooltip": [
+      {"field": "date", "type": "temporal", "timeUnit": "year", "title": "Year"},
+      {"field": "value", "type": "quantitative", "title": "Unemployment rate (%)", "format": ".1f"}
+    ]
+  }
+}

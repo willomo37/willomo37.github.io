@@ -25,7 +25,11 @@
           "field": "wage",
           "type": "quantitative",
           "title": "Minimum wage, dollars per hour (July 1, 2026)"
-        }
+        },
+        "tooltip": [
+          {"field": "state", "title": "State"},
+          {"field": "wage", "title": "Minimum wage", "format": "$.2f"}
+        ]
       }
     },
     {
@@ -74,7 +78,7 @@
       }
     }
   ],
-   "config": {
+  "config": {
     "background": "transparent",
     "font": "Catamaran, sans-serif"
   }
