@@ -1,18 +1,195 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-   <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="Example3.css">
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Devolution Dashboard</title>
-  <!-- copy your stylesheet <link> from portfolio.html here -->
+    <title>UK Devolution Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+
+    <style>
+        /* Wider than the portfolio page so a 3x2 grid fits */
+        body { max-width: 1100px; }
+
+        /* Dashboard grid: 3 columns on desktop, 2 on tablet, 1 on phone */
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 20px;
+            margin: 32px 0;
+        }
+        @media (max-width: 900px) { .dashboard { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+        @media (max-width: 600px) { .dashboard { grid-template-columns: minmax(0, 1fr); } }
+
+        .card {
+            padding: 16px 12px 8px;
+            background: #fbfbfd;
+            border: 1px solid #e8e8ed;
+            border-radius: 24px;
+            min-width: 0;
+        }
+        /* Override the base figure style so charts fill the card */
+        .card figure { display: block; width: 100%; margin: 0; overflow: hidden; }
+        .card .vega-embed { width: 100%; }
+
+        /* Key */
+        .key {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 8px 24px;
+            margin: 16px 0 0;
+            font-size: 0.9rem;
+            color: #424245;
+        }
+        .key span { display: inline-flex; align-items: center; gap: 8px; }
+        .swatch { width: 22px; height: 0; border-top: 3px solid; }
+        .swatch.dashed { border-top-style: dashed; border-top-width: 2px; }
+        .swatch.band { height: 10px; border-top: none; opacity: 0.25; border-radius: 2px; }
+
+        .notes { text-align: left; max-width: 760px; margin: 32px auto 0; }
+        .notes h3 { text-align: center; }
+        .notes p { font-size: 0.95rem; }
+    </style>
 </head>
+
 <body>
-  <h1>UK Devolution Dashboard</h1>
-  <!-- chart grid goes here -->
+    <p><a href="portfolio.html">← Portfolio</a></p>
+
+    <h1 class="big" style="margin-bottom: 0px;">UK Devolution Dashboard</h1>
+    <h3 class="small">
+        Since the turn of the century, the UK has been undergoing a process of devolution; countries and regions are gaining more authority from Westminster. Scotland, Wales and Northern Ireland run their own health care systems, and city-regions are gaining powers too. These charts explore whether regions with more control over health look different on one measure: the share of economically inactive people who are kept out of the labour market due to long-term sickness.
+    </h3>
+
+    <div class="key">
+        <span><i class="swatch" style="border-color:#0066cc"></i> Devolved nation</span>
+        <span><i class="swatch" style="border-color:#c2410c"></i> English city-region</span>
+        <span><i class="swatch dashed" style="border-color:#86868b"></i> UK</span>
+        <span><i class="swatch band" style="background:#424245"></i> 95% confidence interval</span>
+    </div>
+
+    <!-- 3x2 grid: the six empty figures are filled by the loop in the script below -->
+    <div class="dashboard">
+        <div class="card"><figure id="c1"></figure></div>
+        <div class="card"><figure id="c2"></figure></div>
+        <div class="card"><figure id="c3"></figure></div>
+        <div class="card"><figure id="c4"></figure></div>
+        <div class="card"><figure id="c5"></figure></div>
+        <div class="card"><figure id="c6"></figure></div>
+    </div>
+
+    <div class="notes">
+        <h3>About the data</h3>
+  
+        <p>
+           Each chart shows the share of economically inactive people aged 16 to 64 who are inactive because of long-term sickness, from the ONS Annual Population Survey (Nomis API, dataset NM_17_5). All six charts use the same vertical scale. Every area follows a similar U-shape, falling until the mid-2010s and rising since, but the levels differ: Scotland, Wales and Northern Ireland sit well above the UK average, and London sits well below it. The charts show gaps between places, not proof that devolution caused them. 
+        </p>
+        <p>
+            The data was downloaded with a Python loop, one file per area, and the six charts below are built by a single JavaScript loop.
+            <a href="PASTE_COLAB_LINK_HERE" target="_blank" rel="noopener"><strong><u>View the Google Colab notebook</u></strong></a>
+        </p>
+    </div>
+
+<script>
+    // 1. WHERE THE DATA LIVES (raw files in my GitHub repo)
+    const baseUrl = "https://raw.githubusercontent.com/willomo37/willomo37.github.io/main/";
+
+    // 2. THE SIX AREAS TO LOOP OVER (colour shows the type of devolution)
+    const NATION = "#0066cc";
+    const CITY   = "#c2410c";
+    const regions = [
+        { name: "Scotland",         file: "longterm_sick_scotland.json",         color: NATION },
+        { name: "Wales",            file: "longterm_sick_wales.json",            color: NATION },
+        { name: "Northern Ireland", file: "longterm_sick_northern_ireland.json", color: NATION },
+        { name: "London",           file: "longterm_sick_london.json",           color: CITY },
+        { name: "Greater Manchester", file: "longterm_sick_greater_manchester.json", color: CITY },
+        { name: "West Midlands",    file: "longterm_sick_west_midlands.json",    color: CITY }
+    ];
+    const ukFile = "longterm_sick_united_kingdom.json";
+
+    // Same vertical scale on every chart so the six are comparable.
+    // If lines or bands get cut off, widen these two numbers.
+    const yDomain = [10, 50];
+
+    const siteFont = "-apple-system, BlinkMacSystemFont, 'Inter', 'Helvetica Neue', Arial, sans-serif";
+
+    // 3. TEMPLATE CHART: band + UK line + area line. The loop fills in the blanks for each area.
+    const xEnc = { field: "date", type: "temporal", axis: { title: null, format: "%Y", tickCount: 5 } };
+    const yEnc = (field) => ({
+        field: field, type: "quantitative",
+        scale: { domain: yDomain },
+        axis: { title: "% of inactive who are long-term sick", titleFontSize: 10, grid: true }
+    });
+
+    const templateSpec = {
+        "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+        width: "container",
+        height: 220,
+        autosize: { type: "fit", contains: "padding" },
+        background: "transparent",
+        title: { text: "", anchor: "start", fontSize: 16, fontWeight: 600 },
+        layer: [
+            {   // layer 0: 95% confidence band for the area
+                data: { url: "" },
+                transform: [
+                    { calculate: "datum.value - datum.confidence", as: "lower" },
+                    { calculate: "datum.value + datum.confidence", as: "upper" }
+                ],
+                mark: { type: "area", opacity: 0.18, color: "#0066cc", clip: true },
+                encoding: { x: xEnc, y: yEnc("lower"), y2: { field: "upper" } }
+            },
+            {   // layer 1: UK line (same on every chart)
+                data: { url: "" },
+                mark: { type: "line", color: "#86868b", strokeDash: [4, 3], strokeWidth: 1.5, clip: true },
+                encoding: { x: xEnc, y: yEnc("value") }
+            },
+            {   // layer 2: the area's own line
+                data: { url: "" },
+                mark: { type: "line", color: "#0066cc", strokeWidth: 2.5, clip: true },
+                encoding: {
+                    x: xEnc, y: yEnc("value"),
+                    tooltip: [
+                        { field: "region", title: "Area" },
+                        { field: "date", type: "temporal", format: "%b %Y", title: "12 months to" },
+                        { field: "value", format: ".1f", title: "% long-term sick" }
+                    ]
+                }
+            }
+        ],
+        config: { font: siteFont, axis: { labelFontSize: 11 } }
+    };
+
+    // 4. THE LOOP: the embed code is written once and runs six times
+    document.fonts.ready.then(() => {
+        for (let i = 0; i < regions.length; i++) {
+            let r = regions[i];
+
+            // Copy the template so each chart gets its own spec
+            let spec = JSON.parse(JSON.stringify(templateSpec));
+
+            spec.title.text = r.name;
+            spec.layer[0].data.url = baseUrl + r.file;
+            spec.layer[0].mark.color = r.color;
+            spec.layer[1].data.url = baseUrl + ukFile;
+            spec.layer[2].data.url = baseUrl + r.file;
+            spec.layer[2].mark.color = r.color;
+
+            // Print the spec to the console (helpful for debugging)
+            console.log(spec);
+
+            // Select the chart div and embed
+            let chartDiv = document.getElementById(`c${i + 1}`);
+            vegaEmbed(chartDiv, spec, { renderer: "svg", actions: false })
+                .catch(err => console.error("Chart failed to load:", r.name, err));
+        }
+    });
+</script>
 </body>
+
 </html>
